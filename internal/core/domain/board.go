@@ -16,7 +16,7 @@ const (
 type Board [][]string
 
 func NewBoard(size uint, bombs uint) Board {
-	board := newEmptyBoard(size)
+	board := NewEmptyBoard(size)
 	board.FillWithBombs(bombs)
 
 	return board
@@ -38,7 +38,7 @@ func (board Board) FillWithBombs(bombs uint) {
 }
 
 func (board Board) HideBombs() Board {
-	newBoard := newEmptyBoard(uint(len(board)))
+	newBoard := NewEmptyBoard(uint(len(board)))
 
 	for row := range board {
 		for col := range board[0] {
@@ -77,9 +77,7 @@ func (board Board) HasEmptyCells() bool {
 	return false
 }
 
-// ··· Private Functions ··· //
-
-func newEmptyBoard(size uint) Board {
+func NewEmptyBoard(size uint) Board {
 	board := make([][]string, size)
 	for row := range board {
 		board[row] = make([]string, size)
@@ -93,6 +91,8 @@ func newEmptyBoard(size uint) Board {
 
 	return board
 }
+
+// ··· Private Functions ··· //
 
 func getRandomPositions(size int, n uint) []int {
 	rand.Seed(time.Now().UnixNano())

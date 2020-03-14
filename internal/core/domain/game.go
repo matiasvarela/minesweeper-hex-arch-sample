@@ -7,7 +7,7 @@ const (
 )
 
 type Game struct {
-	ID            string        `json:"name"`
+	ID            string        `json:"id"`
 	Name          string        `json:"name"`
 	State         string        `json:"state"`
 	BoardSettings BoardSettings `json:"board_settings"`

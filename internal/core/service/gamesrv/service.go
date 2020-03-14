@@ -37,16 +37,12 @@ func (srv *service) Get(id string) (domain.Game, error) {
 
 func (srv *service) Create(name string, size uint, bombs uint) (domain.Game, error) {
 	if bombs >= size*size {
-		return domain.Game{}, errors.New(apperrors.InvalidIput, nil, "the number of bombs is too high")
+		return domain.Game{}, errors.New(apperrors.InvalidInput, nil, "the number of bombs is too high")
 	}
 
 	game := domain.NewGame(srv.uidGen.New(), name, size, bombs)
 
-	if err := srv.gamesRepository.Create(game); err != nil {
-		if errors.Is(err, apperrors.NotFound) {
-			return domain.Game{}, errors.New(apperrors.NotFound, err, "game not found")
-		}
-
+	if err := srv.gamesRepository.Save(game); err != nil {
 		return domain.Game{}, errors.New(apperrors.Internal, err, "create game into repository has failed")
 	}
 
@@ -66,7 +62,7 @@ func (srv *service) Reveal(id string, row uint, col uint) (domain.Game, error) {
 	}
 
 	if !game.Board.IsValidPosition(row, col) {
-		return domain.Game{}, errors.New(apperrors.InvalidIput, nil, "invalid position")
+		return domain.Game{}, errors.New(apperrors.InvalidInput, nil, "invalid position")
 	}
 
 	if game.IsOver() {
@@ -83,7 +79,7 @@ func (srv *service) Reveal(id string, row uint, col uint) (domain.Game, error) {
 		}
 	}
 
-	if err := srv.gamesRepository.Update(game); err != nil {
+	if err := srv.gamesRepository.Save(game); err != nil {
 		return domain.Game{}, errors.New(apperrors.Internal, err, "update game into repository has failed")
 	}
 
