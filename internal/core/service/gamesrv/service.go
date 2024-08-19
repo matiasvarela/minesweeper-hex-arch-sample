@@ -13,7 +13,7 @@ type service struct {
 	uidGen          uidgen.UIDGen
 }
 
-func New(gamesRepository ports.GamesRepository, uidGen uidgen.UIDGen) *service {
+func New(gamesRepository ports.GamesRepository, uidGen uidgen.UIDGen) ports.GamesService {
 	return &service{
 		gamesRepository: gamesRepository,
 		uidGen:          uidGen,

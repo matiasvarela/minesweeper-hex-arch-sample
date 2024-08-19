@@ -6,6 +6,7 @@ import (
 	"github.com/matiasvarela/errors"
 
 	"github.com/matiasvarela/minesweeper-hex-arch-sample/internal/core/domain"
+	"github.com/matiasvarela/minesweeper-hex-arch-sample/internal/core/ports"
 	"github.com/matiasvarela/minesweeper-hex-arch-sample/pkg/apperrors"
 )
 
@@ -13,7 +14,7 @@ type memkvs struct {
 	kvs map[string][]byte
 }
 
-func NewMemKVS() *memkvs {
+func NewMemKVS() ports.GamesRepository {
 	return &memkvs{kvs: map[string][]byte{}}
 }
 
